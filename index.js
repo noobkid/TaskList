@@ -7,7 +7,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load tasks from localStorage
     const loadTasks = () => {
       const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-      tasks.forEach(task => createTaskElement(task.text, task.completed));
+      tasks.forEach(task => {
+        createTaskElement(task.text, task.completed);
+        task.addEventListener('dragstart', (e) => {
+            e.target.style.opacity='0.5';
+            draggedItem=e.target;
+        });
+
+        task.addEventListener('dragend', (e) => {
+            e.target.style.opacity='1';
+            draggedItem=null;
+        })
+    })
     };
   
     const saveTasks = () => {
